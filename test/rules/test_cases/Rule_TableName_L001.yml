@@ -2,21 +2,15 @@ rule: TableName_L001
 
 no_forbidden_col_used:
   pass_str: |
-    select
-      a,
-      sum(b)
-    from tbl
-    group by a
-    order by a
+    CREATE TABLE users (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(100) NOT NULL
+    );
+  configs:
+    rules:
+      sqlfluff_plugin_tablename:
+        table_name: plural
 
-no_order_by_used:
-  pass_str: |
-    select
-      a,
-      b,
-      c
-    from tbl
-#
 #forbidden_col_used:
 #  fail_str: |
 #    select

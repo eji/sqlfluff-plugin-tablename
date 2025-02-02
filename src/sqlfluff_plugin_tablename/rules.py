@@ -40,23 +40,18 @@ class Rule_TableName_L001(BaseRule):
     """
 
     groups = ("all",)
-    config_keywords = ["forbidden_columns"]
-    crawl_behaviour = SegmentSeekerCrawler({"orderby_clause"})
+    config_keywords = ["table_name"]
+    crawl_behaviour = SegmentSeekerCrawler({"create_table_statement"}) # fixme
     is_fix_compatible = True
-
-    def __init__(self, *args, **kwargs):
-        """Overwrite __init__ to set config."""
-        super().__init__(*args, **kwargs)
-        self.forbidden_columns = [
-            col.strip() for col in self.forbidden_columns.split(",")
-        ]
 
     def _eval(self, context: RuleContext):
         """We should not ORDER BY forbidden_columns."""
         for seg in context.segment.segments:
             col_name = seg.raw.lower()
-            if col_name in self.forbidden_columns:
-                return LintResult(
-                    anchor=seg,
-                    description=f"Column `{col_name}` not allowed in ORDER BY.",
-                )
+            print("--------------------")
+            print(col_name)
+            print("--------------------")
+
+        return LintResult(
+            description="test description",
+        )
